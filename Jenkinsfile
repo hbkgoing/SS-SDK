@@ -1,8 +1,13 @@
 pipeline {
-    agent any
+   agent {
+        docker {
+            image 'docker:24.0.5'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
-        IMAGE_NAME = "192.168.18.200:9000/spring-app"
+        IMAGE_NAME = "192.168.18.200:9000/bee"
         IMAGE_TAG = "${env.BUILD_NUMBER}"  // 每次构建的唯一版本
         K8S_NAMESPACE = "default"
         DEPLOYMENT_NAME = "spring-data-deployment"
